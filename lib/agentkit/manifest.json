@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "product": "pipmcp",
+  "credential": "PIPMCP_API_KEY",
+  "skills": [
+    {
+      "name": "pipmcp-help-scout",
+      "description": "Connect AI agents to Help Scout using one PipMCP API key and actual hosted tool discovery."
+    }
+  ],
+  "files": {
+    "skills/pipmcp-help-scout/SKILL.md": "baf136e04dac8e46ef92713898f0eea93038c250c3b13c4edd30f59c3c7fff9a"
+  }
+}

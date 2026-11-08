@@ -2,273 +2,62 @@
   "schemaVersion": 1,
   "id": "help-scout-mcp",
   "kind": "provider-connector",
-  "artifactType": "connector",
-  "qualityVersion": 2,
+  "product": "pipmcp",
   "title": "Help Scout MCP server",
-  "description": "Find active support conversations and inspect one selected conversation in detail.",
+  "description": "Use Help Scout with AI agents through one PipMCP API key, actual hosted schemas and governed execution.",
   "status": "ready",
   "verification": "mock-only",
   "releaseEligible": true,
+  "operationIds": [],
   "maintainer": "jannikco",
   "license": "MIT",
-  "product": "pipmcp",
-  "appSlug": "help-scout",
-  "appName": "Help Scout",
-  "operationIds": [
-    "helpscout_list_conversations",
-    "helpscout_get_conversation"
-  ],
-  "sourceRevision": "35dd6bd6d43f9f759475aa85bfeaa49cfd65e474fdd4915ce7cb8a70faee116f",
+  "attributionSlug": "github-help-scout-mcp",
+  "sourceRevision": "f0ccc6c40a82421472d620a75be2a0b62c6132f276ca22fe65d9b1debee31b78",
+  "qualityVersion": 2,
+  "artifactType": "connector",
   "evidence": [
-    "Actual tools/call and direct-provider request contract tests"
+    "Gateway HTTP transport fixtures",
+    "Generated stdio wrapper discovery/call fixtures"
   ],
   "provenance": [
     "https://developer.helpscout.com/mailbox-api/endpoints/conversations/list/",
     "https://developer.helpscout.com/mailbox-api/endpoints/conversations/get/"
   ],
-  "attributionSlug": "github-help-scout-mcp",
-  "connectorId": "help-scout",
-  "connector": {
-    "id": "help-scout",
-    "name": "Help Scout",
-    "version": "0.1.0",
-    "baseUrl": "https://api.helpscout.net/v2",
-    "auth": {
-      "type": "oauth-access-token",
-      "env": "HELP_SCOUT_ACCESS_TOKEN"
-    },
-    "tools": [
-      {
-        "name": "helpscout_list_conversations",
-        "description": "Read one page of active conversations, optionally filtered by mailbox.",
-        "method": "GET",
-        "path": "/conversations",
-        "readOnly": true,
-        "approvalRequired": false,
-        "inputSchema": {
-          "type": "object",
-          "properties": {
-            "mailbox": {
-              "type": "integer",
-              "minimum": 1
-            },
-            "page": {
-              "type": "integer",
-              "minimum": 1
-            }
-          },
-          "required": [],
-          "additionalProperties": false
-        },
-        "bindings": {
-          "path": [],
-          "query": {
-            "mailbox": "mailbox",
-            "page": "page"
-          },
-          "body": {}
-        },
-        "sampleArguments": {
-          "page": 1
-        },
-        "evidence": {
-          "state": "documented",
-          "providerLiveValidation": "not-run"
-        },
-        "provenance": [
-          "https://developer.helpscout.com/mailbox-api/endpoints/conversations/list/",
-          "https://developer.helpscout.com/mailbox-api/endpoints/conversations/get/"
-        ]
-      },
-      {
-        "name": "helpscout_get_conversation",
-        "description": "Read one conversation by ID. Merged-conversation redirects are rejected rather than followed.",
-        "method": "GET",
-        "path": "/conversations/{conversationId}",
-        "readOnly": true,
-        "approvalRequired": false,
-        "inputSchema": {
-          "type": "object",
-          "properties": {
-            "conversationId": {
-              "type": "integer",
-              "minimum": 1
-            }
-          },
-          "required": [
-            "conversationId"
-          ],
-          "additionalProperties": false
-        },
-        "bindings": {
-          "path": [
-            "conversationId"
-          ],
-          "query": {},
-          "body": {}
-        },
-        "sampleArguments": {
-          "conversationId": 1001
-        },
-        "evidence": {
-          "state": "documented",
-          "providerLiveValidation": "not-run"
-        },
-        "provenance": [
-          "https://developer.helpscout.com/mailbox-api/endpoints/conversations/list/",
-          "https://developer.helpscout.com/mailbox-api/endpoints/conversations/get/"
-        ]
-      }
-    ],
-    "workflow": {
-      "name": "Help Scout authorized workflow",
-      "description": "Find active support conversations and inspect one selected conversation in detail.",
-      "steps": [
-        "helpscout_list_conversations",
-        "helpscout_get_conversation"
-      ]
-    },
-    "provenance": [
-      "https://developer.helpscout.com/mailbox-api/endpoints/conversations/list/",
-      "https://developer.helpscout.com/mailbox-api/endpoints/conversations/get/"
-    ],
-    "sourceEvidence": {
-      "state": "documented",
-      "providerLiveValidation": "not-run",
-      "checkedAt": "2026-11-08",
-      "operationCount": 2,
-      "kind": "official-reference",
-      "sha256": "5abf59c3391c00009fba0a14de905abb14c10d37fce34f9a620cbcd251c4ac60",
-      "sources": [
-        {
-          "url": "https://developer.helpscout.com/mailbox-api/endpoints/conversations/list/",
-          "sha256": "5abf59c3391c00009fba0a14de905abb14c10d37fce34f9a620cbcd251c4ac60",
-          "checkedAt": "2026-11-08T13:11:27.725072+00:00"
-        },
-        {
-          "url": "https://developer.helpscout.com/mailbox-api/endpoints/conversations/get/",
-          "sha256": "83d318db110004547faeb73cabbcfd864f23663c2754b2c854d795d1afa31e2c",
-          "checkedAt": "2026-11-08T13:18:05.358716+00:00"
-        }
-      ]
-    },
-    "setup": {
-      "requiresPipMcpAccount": false,
-      "credentialsHelpUrl": "https://developer.helpscout.com/mailbox-api/endpoints/conversations/list/",
-      "instructions": "Supply your own Help Scout OAuth access token from your app; local manual token mode is supported, no browser-login helper is claimed. Help Scout plan and user permissions apply. This manifest is read-only; note creation empty201 receipts are unsupported by the current JSON runtime."
-    },
-    "sampleWarning": "Example IDs and email addresses are placeholders. Replace them with records and recipients you are authorized to access. Samples do not authorize writes. HTTP/fixture success does not prove provider execution or email delivery.",
-    "limitations": [
-      "Read-only list/detail tools. Note creation is omitted because its empty HTTP201 response requires a future runtime improvement. Merged conversation301 redirects fail closed; obtain a current authorized conversation ID."
-    ],
-    "appSlug": "help-scout",
-    "repoId": "help-scout-mcp",
-    "product": "pipmcp",
-    "artifactType": "connector",
-    "sourceRevision": "35dd6bd6d43f9f759475aa85bfeaa49cfd65e474fdd4915ce7cb8a70faee116f",
-    "capabilityEvidence": {
-      "local": {
-        "level": "Tested",
-        "operations": [
-          {
-            "name": "helpscout_list_conversations",
-            "level": "Tested",
-            "evidenceRefs": [
-              "Provider request/stdio contract tests"
-            ],
-            "method": "contract-fixture"
-          },
-          {
-            "name": "helpscout_get_conversation",
-            "level": "Tested",
-            "evidenceRefs": [
-              "Provider request/stdio contract tests"
-            ],
-            "method": "contract-fixture"
-          }
-        ],
-        "evidenceRefs": [
-          "Provider request/stdio contract tests"
-        ],
-        "mode": "local"
-      },
-      "managed": {
-        "level": "Documented",
-        "operations": [
-          {
-            "name": "helpscout_list_conversations",
-            "level": "Documented",
-            "evidenceRefs": [],
-            "method": "documentation"
-          },
-          {
-            "name": "helpscout_get_conversation",
-            "level": "Documented",
-            "evidenceRefs": [],
-            "method": "documentation"
-          }
-        ],
-        "evidenceRefs": [],
-        "mode": "managed"
-      }
-    },
-    "managedAvailability": {
-      "status": "import-required",
-      "integration": "openapi-to-mcp",
-      "checkedAt": "2026-11-08T13:20:45.156456+00:00"
-    }
+  "utility": {
+    "problem": "Find active support conversations and inspect one selected conversation in detail.",
+    "output": "Actual hosted tool schemas and durable governed execution receipts"
   },
+  "appSlug": "help-scout",
+  "appName": "Help Scout",
+  "connectorId": "help-scout",
+  "executionAuthority": "pipmcp-gateway",
+  "version": "1.0.0",
+  "agentReady": true,
   "capabilityEvidence": {
     "local": {
       "level": "Tested",
       "operations": [
         {
-          "name": "helpscout_list_conversations",
+          "name": "gateway_transport",
           "level": "Tested",
+          "method": "contract-fixture",
           "evidenceRefs": [
-            "Provider request/stdio contract tests"
-          ],
-          "method": "contract-fixture"
-        },
-        {
-          "name": "helpscout_get_conversation",
-          "level": "Tested",
-          "evidenceRefs": [
-            "Provider request/stdio contract tests"
-          ],
-          "method": "contract-fixture"
+            "Generated gateway/stdio fixtures"
+          ]
         }
       ],
       "evidenceRefs": [
-        "Provider request/stdio contract tests"
+        "Generated gateway/stdio fixtures"
       ],
       "mode": "local"
     },
     "managed": {
       "level": "Documented",
-      "operations": [
-        {
-          "name": "helpscout_list_conversations",
-          "level": "Documented",
-          "evidenceRefs": [],
-          "method": "documentation"
-        },
-        {
-          "name": "helpscout_get_conversation",
-          "level": "Documented",
-          "evidenceRefs": [],
-          "method": "documentation"
-        }
-      ],
+      "operations": [],
       "evidenceRefs": [],
       "mode": "managed"
     }
   },
-  "utility": {
-    "problem": "Find active support conversations and inspect one selected conversation in detail.",
-    "output": "Actual provider API results through local MCP tools"
-  },
-  "providerDocs": "https://developer.helpscout.com/mailbox-api/endpoints/conversations/list/",
   "factory": "leadadapter-pipmcp",
-  "generatorVersion": 2
+  "generatorVersion": 3
 }
